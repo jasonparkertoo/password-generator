@@ -22,7 +22,7 @@ public class PasswordResourceTest extends JerseyTest {
 
     @Test
     public void givenARequestForARandomPassword_whenTheLengthGivenIsNotValid_thenA400IsReturned() {
-        int length = 11;
+        int length = 7;
         Response res = target("password/" + length).request().get();
 
         int expectedStatus = 400;
