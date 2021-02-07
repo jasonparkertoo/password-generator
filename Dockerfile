@@ -1,4 +1,4 @@
-FROM tomcat:jre8-alpine
-ADD ./target/password-generator.war /usr/local/tomcat/webapps/password-generator.war
+FROM adoptopenjdk/openjdk11
+ADD ./target/password-generator.jar /password-generator.jar
 EXPOSE 8080
-CMD ["catalina.sh","run"]
+CMD ["java","-jar", "password-generator.jar"]

@@ -21,7 +21,7 @@ public class DefaultGenerator {
     public String getPassword(int length) {
 
         if (length < minLength)
-            throw new IllegalArgumentException("Illegal password length requested");
+            throw new IllegalArgumentException("Password with fewer than 8 characters are insecure!");
 
         StringBuilder stringBuilder = new StringBuilder();
         while ((--length) >= 0) {
