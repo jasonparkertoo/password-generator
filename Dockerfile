@@ -1,4 +1,5 @@
-FROM adoptopenjdk/openjdk11
-ADD ./target/password-generator.jar /password-generator.jar
+FROM java:8-jdk-alpine
+WORKDIR /usr/app
+COPY ./target/password-generator.jar /usr/app
 EXPOSE 8080
-CMD ["java","-jar", "password-generator.jar"]
+ENTRYPOINT ["java","-jar","password-generator.jar"]

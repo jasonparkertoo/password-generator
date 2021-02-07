@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   api:
+    image: password-generator:latest
     build: .
     ports:
       - "8081:8080"

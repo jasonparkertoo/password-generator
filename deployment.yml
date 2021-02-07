@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pwdgen-deployment
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pwgen
+  template:
+    metadata:
+      labels:
+        app: pwgen
+    spec:
+      containers:
+        - name: pwgen
+          image: jparker1121/pwdgen:latest
+          ports:
+            - containerPort: 8080
+
