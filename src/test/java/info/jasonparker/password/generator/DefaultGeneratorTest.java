@@ -1,17 +1,18 @@
 package info.jasonparker.password.generator;
 
-import info.jasonparker.password.rules.DefaultRules;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
+
+import info.jasonparker.password.rules.DefaultRules;
 
 public class DefaultGeneratorTest {
 
     private final DefaultGenerator defaultGenerator = new DefaultGenerator(new DefaultRules());
 
     @Test
-    public void getPasswordReturnsExpectedLengthString() {
+    public void testPasswordReturnsExpectedLengthString() {
         int expected = 12;
         String pw = defaultGenerator.getPassword(expected);
         int actual = pw.length();
@@ -19,7 +20,7 @@ public class DefaultGeneratorTest {
     }
 
     @Test
-    public void givenAPasswordRequest_whenTheRequestedLengthIsValid_thenThePasswordMatchesTheRegularExpression() {
+    public void testValidRequestReturnsExpectedPattern() {
         String pw = defaultGenerator.getPassword(20);
         boolean isValid = pw.matches(defaultGenerator.getPattern());
         assertTrue(isValid);

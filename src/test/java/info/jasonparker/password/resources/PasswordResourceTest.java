@@ -1,44 +1,34 @@
 package info.jasonparker.password.resources;
 
-import info.jasonparker.password.exceptions.PasswordExceptionMapper;
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import javax.ws.rs.core.Application;
-import javax.ws.rs.core.Response;
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import static org.junit.Assert.assertEquals;
+@AutoConfigureMockMvc
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+public class PasswordResourceTest {
 
-public class PasswordResourceTest extends JerseyTest {
+    @LocalServerPort
+    private int port;
 
-    @Override
-    protected Application configure() {
-        ResourceConfig rc = new ResourceConfig();
-        rc.register(PasswordExceptionMapper.class);
-        rc.register(PasswordResource.class);
-        return rc;
-    }
-
-    @Test
-    public void givenARequestForARandomPassword_whenTheLengthGivenIsNotValid_thenA400IsReturned() {
-        int length = 7;
-        Response res = target("password/" + length).request().get();
-
-        int expectedStatus = 400;
-        int actualStatus = res.getStatus();
-
-        assertEquals("Should return 400 Bad Request", expectedStatus, actualStatus);
-    }
+    @Autowired
+    private MockMvc mockMvc;
 
     @Test
-    public void givenARequestForARandomPassword_whenTheLengthGivenIsValid_thenA200IsReturned() {
-        int length = 12;
-        Response res = target("password/" + length).request().get();
+    public void testShouldReturn200() throws Exception {
+        final String uriTemplate = "http://localhost:%d/api/v1/password?len=%d";
 
-        int expectedStatus = 200;
-        int actualStatus = res.getStatus();
+        int paramValue = 12;
 
-        assertEquals("Should return 200 OK", expectedStatus, actualStatus);
+        String uri = String.format(uriTemplate, port, paramValue);
+
+        this.mockMvc.perform(get(uri)).andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

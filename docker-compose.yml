@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   api:
-    image: password-generator:latest
+    image: jparker121/pwdgen:latest
     build: .
     ports:
       - "8081:8080"
